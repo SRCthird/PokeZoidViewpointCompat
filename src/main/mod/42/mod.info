@@ -1,6 +1,8 @@
 name=${modName}
 id=${modId}
-description=Empty Java mod template powered by ZombieBuddy.
-require=\ZombieBuddy
+require=CreatureViewerPrototype,Viewpoint
+description=Client-side integration bridge for PokeZoid world sightings and Project Viewpoint. No server Lua or authoritative state changes.
+version=${modVersion}
+author=FrigidAmbiance
 javaJarFile=media/java/${modId}.jar
 javaPkgName=${modPackage}
