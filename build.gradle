@@ -29,7 +29,7 @@ def modPackage = providers.gradleProperty('modPackage').get()
 
 tasks.register('assembleMod', Sync) {
     dependsOn tasks.named('jar')
-    into layout.buildDirectory.dir("mod/${modId}")
+    into layout.buildDirectory.dir("mod/${modName}")
     from('src/main/mod') {
         filesMatching('42/mod.info') {
             expand(modId: modId, modName: modName, modPackage: modPackage)
