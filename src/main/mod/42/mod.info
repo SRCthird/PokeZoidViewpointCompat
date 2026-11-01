@@ -1,0 +1,6 @@
+name=${modName}
+id=${modId}
+description=Empty Java mod template powered by ZombieBuddy.
+require=\ZombieBuddy
+javaJarFile=media/java/${modId}.jar
+javaPkgName=${modPackage}
