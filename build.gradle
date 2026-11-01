@@ -35,6 +35,9 @@ tasks.register('assembleMod', Sync) {
             expand(modId: modId, modName: modName, modPackage: modPackage)
         }
     }
+    filesMatching('42/media/lua/client/PokeZoidViewpoint/BillboardOverlay.lua') {
+        expand(modVersion: project.version)
+    }
     from(tasks.named('jar')) {
         into '42/media/java'
     }
