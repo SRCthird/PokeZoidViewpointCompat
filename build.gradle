@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+}
+
+group = 'FrigidAmbiance.Compat'
+version = providers.gradleProperty('modVersion').get()
+
+base {
+    archivesName = providers.gradleProperty('modId').get()
+}
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(25) }
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+tasks.named('jar') {
+    archiveVersion = ''
+}
+
+def modId = providers.gradleProperty('modId').get()
+def modName = providers.gradleProperty('modName').get()
+def modPackage = providers.gradleProperty('modPackage').get()
+
+tasks.register('assembleMod', Sync) {
+    dependsOn tasks.named('jar')
+    into layout.buildDirectory.dir("mod/${modId}")
+    from('src/main/mod') {
+        filesMatching('42/mod.info') {
+            expand(modId: modId, modName: modName, modPackage: modPackage)
+        }
+    }
+    from(tasks.named('jar')) {
+        into '42/media/java'
+    }
+}
+
+tasks.register('packageMod', Zip) {
+    dependsOn tasks.named('assembleMod')
+    archiveFileName = "${modId}-${project.version}.zip"
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+    from(layout.buildDirectory.dir('mod'))
+}
+
+tasks.named('build') { dependsOn tasks.named('packageMod') }
